@@ -7,21 +7,22 @@
 {% block content %}  
 
 <div class = "create">
-    <h1>Create New Task</h1>  
+    <h1 class="todolist_header">Create New Task</h1>  
 
         <form method="POST" action="">  
-            {% csrf_token %}  
-            <h3>Task Title</h3>
-            <input type="text" name="title" placeholder="Task Title">
+            {% csrf_token %} 
+            <div class="create_content">
+                <h3>Task Title</h3>
+                <input type="text" name="title" placeholder="Task Title" class="create_inp_title">
 
-            <h3>Description</h3>
-            <input type="text" name="description" placeholder="Description">
+                <h3 style="padding-top:2%;">Description</h3>
+                <input type="text" name="description" placeholder="Description" class="create_inp_desc">
 
-            <br>
-            <br>
-            <br>
-            
-            <input type="submit" name="submit" value="Submit">
+                <br>
+                
+                <input class="btn btn-primary login_button" type="submit" name="submit" value="Submit">
+                <button class="btn btn-primary login_button"><a class="no_link" style="color:white;"href="javascript:history.back()">Back</a></button>
+            </div> 
         </form>
 </div>  
 

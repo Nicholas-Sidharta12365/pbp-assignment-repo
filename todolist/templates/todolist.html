@@ -2,29 +2,23 @@
 
  {% block content %}
 
-  <h1>Tugas 3 Assignment PBP/PBD</h1>
-  <h2>Todolist</h2>
+  <h1 class="todolist_header">Tugas 3 Assignment PBP/PBD</h1>
+  <div class="todolist_content">
+    <h2 class="title_todolist">TODOLIST</h2>
 
-  <h5>Name: </h5>
-  <p>{{username}}</p>
-
-  <table>
-    <tr>
-      <th>Date</th>
-      <th>Title</th>
-      <th>Description</th>
-    </tr>
-    {% for data in taskData %}
-    <tr>
-      <th>{{data.date}}</th>
-      <th>{{data.title}}</th>
-      <th>{{data.description}}</th>
-    </tr>
-    {% endfor %}
-  </table>
-  <br>
-  <button><a href="/todolist/create-task/">Create New Task</a></button>
-  <br>
-  <button><a href="/todolist/logout/">Logout</a></button>
+    <h5 class="name_head">Name: </h5>
+    <p class="name_sub">{{username}}</p>
+    <div class="card_control">
+      {% for data in taskData %}
+        <div class="card card_hover" style="width: 18rem;">
+          <div class="card-body">
+            <h3 class="card-title text-black">{{data.title}}</h3>
+            <h5 class="card-title text-black">{{data.date}}</h5>
+            <p class="card-text text-black">{{data.description}}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
  {% endblock content %}

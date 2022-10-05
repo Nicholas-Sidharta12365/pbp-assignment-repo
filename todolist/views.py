@@ -46,6 +46,8 @@ def todolist(request):
     context ={
         'username' : tmp_user.username,
         'taskData' : data,
+        'display_create': 'Create New Task',
+        'display_logout': 'Logout',
     }
 
     return render(request, "todolist.html", context)
