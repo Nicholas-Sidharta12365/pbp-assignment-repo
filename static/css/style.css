@@ -154,6 +154,11 @@ h1{
     background-color: #25c2a0;
 }
 
+.control_login{
+    text-align: center;
+    margin-top: 3%;
+}
+
 @media (max-width: 1519px) {
     .card_control{
         grid-template-columns: repeat(4, minmax(0, 1fr));

@@ -29,14 +29,13 @@
             </tr>
         </table>
     </form>
-
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}     
+    <div class="control_login">
+        {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+        {% endif %}     
+    </div>
         
     <div class="register_block">Belum mempunyai akun? <a href="/todolist/register/">Buat Akun</a></div>
 
