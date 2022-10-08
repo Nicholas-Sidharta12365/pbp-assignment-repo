@@ -2,23 +2,99 @@
 
  {% block content %}
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-10" id="staticBackdropLabel">Create New Task</h1>
+        <button id="close_modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class = "create">
+                <form method="POST" action="">  
+                    {% csrf_token %} 
+                    <div class="create_content">
+                        <h3>Task Title</h3>
+                        <input type="text" id="task_title" placeholder="Task Title" class="create_inp_title">
+        
+                        <h3 style="padding-top:2%;">Description</h3>
+                        <input type="text" id="description" placeholder="Description" class="create_inp_desc">
+        
+                        <br>
+                    </div> 
+                </form>
+        </div>  
+      </div>
+      <div class="modal-footer">
+        <button id="close_button" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary login_button" type="submit" id="add_button">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <h1 class="todolist_header">Tugas 3 Assignment PBP/PBD</h1>
   <div class="todolist_content">
     <h2 class="title_todolist">TODOLIST</h2>
 
     <h5 class="name_head">Name: </h5>
     <p class="name_sub">{{username}}</p>
+    <!-- Button trigger modal -->
+    <button id="modal_launch" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Create New Task
+    </button>
+    <button id="get">Get Data</button>
     <div class="card_control">
-      {% for data in taskData %}
-        <div class="card card_hover" style="width: 18rem;">
-          <div class="card-body">
-            <h3 class="card-title text-black">{{data.title}}</h3>
-            <h5 class="card-title text-black">{{data.date}}</h5>
-            <p class="card-text text-black">{{data.description}}</p>
-          </div>
-        </div>
-      {% endfor %}
     </div>
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+      $("#get").click(function(){
+          $.get("/todolist/json", function(database) {
+                var userID = parseInt('{{id}}');
+                $(".card_control").empty();
+                for(var i = 0 ; i < Object.keys(database).length; i++){
+                  if(database[i].fields.user === userID){
+                    $(".card_control").append(
+                      '<div class="card card_hover" style="width: 18rem;">' +
+                        '<div class="card-body">' +
+                          '<h3 class="card-title text-black">' + database[i].fields.title + '</h3>' +
+                          '<h5 class="card-title text-black">' + database[i].fields.date + '</h5>' +
+                          '<p class="card-text text-black">' + database[i].fields.description + '</p>'+
+                        '</div>' +
+                      '</div>'
+                    );
+                  }
+              }
+          });
+      });
+  });
+  </script>
+
+<script>
+  $(document).ready(function(){
+      $("#add_button").click(function(){
+          // get the value of CSRF token
+          var CSRFtoken = $('input[name=csrfmiddlewaretoken]').val();
+          var task_name = document.getElementById("task_title").value;
+          var description = document.getElementById("description").value;
+  
+          $.post("/todolist/add/",{
+              title: task_name,
+              desc: description,
+              csrfmiddlewaretoken: CSRFtoken
+          });
+          $("#close_button").click();
+
+          setTimeout(function(){
+            $("#get").click();
+          }, 500);
+      });
+  });
+  </script>
 
  {% endblock content %}
